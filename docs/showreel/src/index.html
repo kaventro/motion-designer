@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>motion-designer showreel</title>
+<link rel="stylesheet" href="film.css">
+<style>
+  html:not(.render) body { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 16px; min-height: 100vh; background: #0B0A14; }
+  html:not(.render) #frame { position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); }
+  html:not(.render) #stage { transform-origin: 0 0; }
+  html.render body { overflow: hidden; }
+  #player { display: flex; align-items: center; gap: 12px; font: 600 14px system-ui, sans-serif; color: #A3ABBA; }
+  #player button { font: inherit; border: 0; border-radius: 999px; padding: 8px 18px; background: #5B47F0; color: #fff; cursor: pointer; }
+  #player input { width: min(60vw, 520px); }
+  #player span { min-width: 120px; font-variant-numeric: tabular-nums; }
+</style>
+<script src="assets.js"></script>
+<script src="core.js"></script>
+<script src="kit.js"></script>
+<script src="wave.js"></script>
+<script src="films.js"></script>
+<script src="frames.js"></script>
+<script src="s01_hook.js"></script>
+<script src="s02_type.js"></script>
+<script src="s03_springs.js"></script>
+<script src="s04_morph.js"></script>
+<script src="s05_grid.js"></script>
+<script src="s06_wall.js"></script>
+<script src="s07_vocab.js"></script>
+<script src="s08_brief.js"></script>
+<script src="s09_music.js"></script>
+<script src="s10_seek.js"></script>
+<script src="s11_check.js"></script>
+<script src="s11b_badge.js"></script>
+<script src="s12_work.js"></script>
+<script src="s13_cta.js"></script>
+<script src="scenes.js"></script>
+</head>
+<body>
+<div id="frame"><div id="stage"></div></div>
+<div id="player" hidden><button id="play" type="button">Play</button><input id="scrub" type="range" min="0" step="0.001" value="0"><span id="time"></span></div>
+<audio id="music" src="../audio/mix.m4a" preload="auto"></audio>
+<script src="main.js"></script>
+</body>
+</html>

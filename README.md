@@ -9,7 +9,12 @@ renders it to video.
 This is the skill's own launch film, made with the skill in one Claude Code session. The music was generated
 on the same Mac with ACE-Step and the voice with Chatterbox. [How it was made](docs/launch-film).
 
-All the films and how it works are also on the site: [designer.ostinos.com](https://designer.ostinos.com).
+[![The motion-designer showreel](docs/showreel/poster.jpg)](docs/showreel/preview.mp4)
+
+And its showreel: 45 seconds of motion design, how the skill works and three films made with it, cut to an
+original track made on the same Mac. [How it was made](docs/showreel).
+
+The launch film, the examples and how it works are also on the site: [designer.ostinos.com](https://designer.ostinos.com).
 
 ## Examples
 
@@ -106,6 +111,7 @@ tests/           end-to-end tests of every script and template
 evals/           behaviour evals for claude plugin eval
 examples/        Rolyn, Oryn, a story film and the skill-made Oryn showreel
 docs/launch-film the skill's own film
+docs/showreel    the skill's showreel
 site/            the site, published to designer.ostinos.com by .github/workflows/pages.yml
 ```
 
@@ -153,5 +159,5 @@ reason.
 MIT for the skill, the templates and the example films' code. Rolyn and Oryn are real apps by the author;
 Appname in the story film is made up. Brand logos in the Rolyn example belong to their owners. Music: "Digital
 Clouds" by Alejandro Magaña (Mixkit License) in Rolyn, "Ethereal Pulse" by Surf House Productions (CC BY 4.0) in
-Oryn, and original ACE-Step tracks in the story film and the skill's own film. Voices made with Chatterbox carry
+Oryn, and original ACE-Step tracks in the story film, the skill's own film and its showreel. Voices made with Chatterbox carry
 Resemble AI's inaudible watermark.

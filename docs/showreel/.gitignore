@@ -1,0 +1,13 @@
+out/
+audio/source/
+audio/cues*.json
+audio/mix*
+audio/cut15-music.wav
+dist/
+assets/img/
+src/frames.js
+src/films.js
+preview-15s.mp4
+src/cut15.html
+tools/make_cut.py
+tools/cut_audio.py

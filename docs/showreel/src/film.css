@@ -1,0 +1,39 @@
+:root {
+  --violet: #5B47F0;
+  --deep: #1C1450;
+  --night: #0D0F14;
+  --night2: #151922;
+  --paper: #F4F1EA;
+  --ink: #17150F;
+  --orange: #E0703A;
+  --mint: #53E0B4;
+  --lilac: #8B7CFF;
+  --coral: #FF6B5E;
+  --sans: "Inter", -apple-system, "SF Pro Display", system-ui, sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", ui-monospace, Menlo, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--violet);
+  color: #fff;
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+#stage { position: relative; overflow: hidden; background: var(--violet); contain: strict; }
+
+.full { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+.abs { position: absolute; }
+.row { display: flex; align-items: center; }
+.center { display: flex; align-items: center; justify-content: center; }
+.mask { overflow: hidden; }
+.shot { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; }
+.t { display: inline-block; white-space: nowrap; line-height: 1.14; vertical-align: top; }
+.mono { font-family: var(--mono); }
+.label { font-family: var(--mono); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+.disp { font-weight: 900; letter-spacing: -0.045em; }
+.chip { display: inline-flex; align-items: center; white-space: nowrap; }
