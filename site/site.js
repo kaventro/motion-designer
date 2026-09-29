@@ -31,7 +31,7 @@
     reel: {
       src: "../examples/oryn-reel/preview.mp4",
       poster: "../examples/oryn-reel/poster.jpg",
-      cap: "Oryn showreel, built by hand in a Claude Code session, not by the skill. The music is an original score synthesized in code, with no samples.",
+      cap: "Oryn showreel, created with the motion-designer skill in a Claude Code session. The music is an original score synthesized in code, with no samples.",
     },
     story: {
       src: "../examples/story/preview.mp4",
