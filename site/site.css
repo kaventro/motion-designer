@@ -335,7 +335,7 @@ section { max-width: var(--wide); margin: 0 auto; padding-block: clamp(72px, 11v
 .stack { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; min-height: 0; }
 .stack .film { min-height: 0; }
 .film-story { aspect-ratio: 16 / 9; }
-.reels { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.reels { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .film-reel { display: flex; flex-direction: column; }
 .film-reel video { height: auto; aspect-ratio: 16 / 9; }
 .film-reel::after { display: none; }
@@ -690,6 +690,11 @@ html.cursor-on .cursor { display: block; }
   .name { font-size: 8.4vw; }
 }
 
+@media (max-width: 1100px) {
+  .reels { grid-template-columns: 1fr 1fr; }
+  .reels .film-reel:last-child { grid-column: 1 / -1; }
+}
+
 @media (max-width: 900px) {
   .hero-pebble { left: 50%; top: 35%; width: min(78vw, 46vh); }
   .slate { display: none; }
@@ -704,6 +709,7 @@ html.cursor-on .cursor { display: block; }
 
 @media (max-width: 720px) {
   .reels { grid-template-columns: 1fr; }
+  .reels .film-reel:last-child { grid-column: auto; }
 }
 
 @media (max-width: 560px) {

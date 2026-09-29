@@ -27,6 +27,8 @@ Click a poster to watch with sound. Each folder has the film's beat map and how 
 carry their sources; the story film is the demo in the story template.
 
 Also in the folder: [Oryn showreel](examples/oryn-reel), a 60 s cut created with the motion-designer skill in a Claude Code session.
+The [Lomi showreel](examples/lomi-reel) is a 30 s cut of the Lomi desktop app, made in a Claude Code session with
+[HyperFrames](https://github.com/heygen-com/hyperframes) rather than the skill.
 
 ## Install
 
@@ -109,7 +111,7 @@ skills/motion-designer/
 .claude-plugin/  plugin.json and marketplace.json, so this repository is also the plugin
 tests/           end-to-end tests of every script and template
 evals/           behaviour evals for claude plugin eval
-examples/        Rolyn, Oryn, a story film and the skill-made Oryn showreel
+examples/        Rolyn, Oryn, a story film, the skill-made Oryn showreel and the Lomi showreel
 docs/launch-film the skill's own film
 docs/showreel    the skill's showreel
 site/            the site, published to designer.ostinos.com by .github/workflows/pages.yml
@@ -156,8 +158,8 @@ reason.
 
 ## License
 
-MIT for the skill, the templates and the example films' code. Rolyn and Oryn are real apps by the author;
+MIT for the skill, the templates and the example films' code. Rolyn, Oryn and Lomi are real apps by the author;
 Appname in the story film is made up. Brand logos in the Rolyn example belong to their owners. Music: "Digital
 Clouds" by Alejandro Magaña (Mixkit License) in Rolyn, "Ethereal Pulse" by Surf House Productions (CC BY 4.0) in
-Oryn, and original ACE-Step tracks in the story film, the skill's own film and its showreel. Voices made with Chatterbox carry
-Resemble AI's inaudible watermark.
+Oryn, and original ACE-Step tracks in the story film, the skill's own film and its showreel. The Lomi showreel has an original
+score synthesized in code. Voices made with Chatterbox carry Resemble AI's inaudible watermark.
