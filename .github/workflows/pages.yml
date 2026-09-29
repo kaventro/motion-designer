@@ -34,7 +34,7 @@ jobs:
           mkdir -p _site/docs/launch-film
           cp site/index.html site/site.css site/site.js _site/
           cp docs/launch-film/preview.mp4 docs/launch-film/poster.jpg _site/docs/launch-film/
-          for film in rolyn oryn story; do
+          for film in rolyn oryn story oryn-reel; do
             mkdir -p "_site/examples/$film"
             cp "examples/$film/preview.mp4" "examples/$film/poster.jpg" "_site/examples/$film/"
           done

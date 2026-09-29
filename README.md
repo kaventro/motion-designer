@@ -21,6 +21,8 @@ All the films and how it works are also on the site: [designer.ostinos.com](http
 Click a poster to watch with sound. Each folder has the film's beat map and how it was made. Rolyn and Oryn
 carry their sources; the story film is the demo in the story template.
 
+Also in the folder: [Oryn showreel](examples/oryn-reel), a 60 s cut built by hand in a Claude Code session rather than by the skill.
+
 ## Install
 
 As a skill, where the command is `/motion-designer`:
@@ -102,7 +104,7 @@ skills/motion-designer/
 .claude-plugin/  plugin.json and marketplace.json, so this repository is also the plugin
 tests/           end-to-end tests of every script and template
 evals/           behaviour evals for claude plugin eval
-examples/        Rolyn, Oryn and a story film
+examples/        Rolyn, Oryn, a story film and a hand-built Oryn showreel
 docs/launch-film the skill's own film
 site/            the site, published to designer.ostinos.com by .github/workflows/pages.yml
 ```

@@ -28,6 +28,11 @@
       poster: "../examples/oryn/poster.jpg",
       cap: "Oryn. Music: “Ethereal Pulse” by <a href=\"https://surf-house-productions.bandcamp.com\">Surf House Productions</a>, <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a>. Voice: Chatterbox.",
     },
+    reel: {
+      src: "../examples/oryn-reel/preview.mp4",
+      poster: "../examples/oryn-reel/poster.jpg",
+      cap: "Oryn showreel, built by hand in a Claude Code session, not by the skill. The music is an original score synthesized in code, with no samples.",
+    },
     story: {
       src: "../examples/story/preview.mp4",
       poster: "../examples/story/poster.jpg",

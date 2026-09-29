@@ -335,6 +335,7 @@ section { max-width: var(--wide); margin: 0 auto; padding-block: clamp(72px, 11v
 .stack { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; min-height: 0; }
 .stack .film { min-height: 0; }
 .film-story { aspect-ratio: 16 / 9; }
+.film-reel { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
 
 .tag {
   position: absolute;
@@ -689,7 +690,7 @@ html.cursor-on .cursor { display: block; }
   .hero-pebble { left: 50%; top: 35%; width: min(78vw, 46vh); }
   .slate { display: none; }
   .grid { grid-template-columns: 1fr 1fr; }
-  .film-launch, .stack, .film-story { grid-column: 1 / -1; }
+  .film-launch, .stack, .film-story, .film-reel { grid-column: 1 / -1; }
   .stack { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
   .stack .film { aspect-ratio: 1; }
   .kinds { grid-column: 1 / -1; }
@@ -711,11 +712,11 @@ html.cursor-on .cursor { display: block; }
   .bio { font-size: 15px; }
   .btn { height: 48px; padding: 0 20px; }
   .grid { grid-template-columns: 1fr; }
-  .film-launch, .stack, .film-story, .kinds { grid-column: auto; }
+  .film-launch, .stack, .film-story, .film-reel, .kinds { grid-column: auto; }
   .stack { grid-template-columns: 1fr; }
   .film, .stack .film { display: flex; flex-direction: column; aspect-ratio: auto; }
   .film video { height: auto; aspect-ratio: 1; }
-  .film-story video { aspect-ratio: 16 / 9; }
+  .film-story video, .film-reel video { aspect-ratio: 16 / 9; }
   .film::after { display: none; }
   .film-info { position: static; padding: 14px 18px 18px; }
   .film-rolyn .desc, .film-oryn .desc { display: block; }
