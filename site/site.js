@@ -28,6 +28,11 @@
       poster: "../examples/oryn/poster.jpg",
       cap: "Oryn. Music: “Ethereal Pulse” by <a href=\"https://surf-house-productions.bandcamp.com\">Surf House Productions</a>, <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a>. Voice: Chatterbox.",
     },
+    showreel: {
+      src: "../docs/showreel/preview.mp4",
+      poster: "../docs/showreel/poster.jpg",
+      cap: "motion-designer, the skill's own showreel. The music is an original track made with ACE-Step, the small sounds come from sfx.py.",
+    },
     reel: {
       src: "../examples/oryn-reel/preview.mp4",
       poster: "../examples/oryn-reel/poster.jpg",

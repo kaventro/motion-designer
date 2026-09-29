@@ -7,6 +7,8 @@ on:
       - site/**
       - docs/launch-film/preview.mp4
       - docs/launch-film/poster.jpg
+      - docs/showreel/preview.mp4
+      - docs/showreel/poster.jpg
       - examples/*/preview.mp4
       - examples/*/poster.jpg
       - .github/workflows/pages.yml
@@ -31,9 +33,10 @@ jobs:
       - uses: actions/checkout@v7
       - name: Put the site and its films together
         run: |
-          mkdir -p _site/docs/launch-film
+          mkdir -p _site/docs/launch-film _site/docs/showreel
           cp site/index.html site/site.css site/site.js _site/
           cp docs/launch-film/preview.mp4 docs/launch-film/poster.jpg _site/docs/launch-film/
+          cp docs/showreel/preview.mp4 docs/showreel/poster.jpg _site/docs/showreel/
           for film in rolyn oryn story oryn-reel; do
             mkdir -p "_site/examples/$film"
             cp "examples/$film/preview.mp4" "examples/$film/poster.jpg" "_site/examples/$film/"

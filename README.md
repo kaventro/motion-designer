@@ -14,7 +14,7 @@ on the same Mac with ACE-Step and the voice with Chatterbox. [How it was made](d
 And its showreel: 45 seconds of motion design, how the skill works and three films made with it, cut to an
 original track made on the same Mac. [How it was made](docs/showreel).
 
-The launch film, the examples and how it works are also on the site: [designer.ostinos.com](https://designer.ostinos.com).
+All the films and how it works are also on the site: [designer.ostinos.com](https://designer.ostinos.com).
 
 ## Examples
 
