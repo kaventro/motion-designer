@@ -31,13 +31,14 @@ Sheets label each tile with its time and beat, 24 tiles a page (`all-1.png`, `al
 Pictures are the most expensive thing in a session and they stay in it until it ends, so the looking is done by
 [reviewers](reviewer.md) with clean contexts, who send back lines of text ([harness](harness.md), "Delegate"). Split
 the film into stretches of about 12 s and dispatch one reviewer per stretch and kind, all at once: `overview` for
-the whole film, `transitions` with the cut times, `text` with the times of every text screen. Give each the beat
+the whole film, `transitions` with the cut times, `text` with the times of every text screen, and one `phone`
+reviewer for the whole film at 360 px wide. Give each the beat
 map rows for its stretch. Where your harness cannot delegate, do the same passes yourself, one stretch at a time.
 
 1. **Overview** every 0.5 s: does the story read? Is the phone always there once it forms? Is every result held long enough to read? Give each line that has to be read half a second, plus a third of a second for every word, once its last word has landed and stopped moving.
 2. **Every transition** at 0.05 s, from 0.3 s before to 0.3 s after: flashes, pops, overlaps, mask edges.
 3. **Every screen with text** at full size (`--scale 2`, view at 100 %): truncation, clipped descenders, text size, alignment against the app.
-4. Fix what the reports name, re-run the checks, then send a reviewer back to only what changed and its neighbours, with `CHANGED` saying what was fixed. Repeat until every report reads `clean`.
+4. Fix what the reports name, re-run the checks, then send a reviewer back to only what changed and its neighbours, with `CHANGED` saying what was fixed. Each report scores its stretch from 1 to 10 (hook, readability, motion, variety, composition, sync, accuracy); repeat until every report reads `clean`, which needs every score at 8 or more.
 5. **Fresh eyes** on the finished render: play it once to someone new to the app, or imagine you are: can they name the app, the job it does, the person it does it for, and where to find it? Is frame 0 (the thumbnail most players and feeds show) a finished frame you'd post? If not, fix the story or the opening, not the polish. Look at frame 0 and the poster yourself.
 
 ## Failure catalogue
@@ -60,6 +61,7 @@ map rows for its stretch. Where your harness cannot delegate, do the same passes
 ## Deliverables to render
 
 - `out/<name>.mp4`: H.264, `yuv420p`, CRF 14, with the music (or the voiceover mix).
+- **Motion blur** for films with fast moves (pushes, whips, flicks, spins): `render.mjs video ... --blur 8` averages 8 subframes a frame over a 180 degree shutter, the way a film camera smears motion. It costs 8 times the render time, so render the final with it and preview without. Copies still showing on the fastest moves: `--blur 16`. `stills`, `sheet` and `verify` take the same flag, so a reviewer and the verify check see what the render shows.
 - `out/<name>-loop.mp4`: the same picture without sound, for autoplaying muted on sites and in feeds: `ffmpeg -i out/<name>.mp4 -an -c:v copy out/<name>-loop.mp4`.
 - `out/<name>-poster.png`: the hero frame (usually the drop): `render.mjs stills <page> out/poster <t> --scale 2`.
 - `out/<name>-1080.mp4` when a platform or a phone needs a smaller file: `ffmpeg -i out/<name>.mp4 -vf scale=1080:-2:flags=lanczos -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a copy out/<name>-1080.mp4`.

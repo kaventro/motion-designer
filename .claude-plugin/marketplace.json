@@ -13,7 +13,7 @@
       "name": "motion-designer",
       "source": "./",
       "description": "App launch films with the real UI in an iPhone or a laptop window, cut to music on the beat, styled, voiced, checked frame by frame and rendered.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "category": "design",
       "keywords": ["video", "motion-designer", "launch-film", "motion-design", "music", "voiceover"]
     }

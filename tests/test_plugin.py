@@ -253,6 +253,22 @@ wait $chrome
         with Image.open(out) as sheet:
             self.assertEqual(sheet.size, (6 * 308, 326))
 
+    def test_phone_sheet_shows_frames_at_phone_width_on_one_readable_page(self):
+        out = self.dir / "out/phone.png"
+        run("node", SCRIPTS / "render.mjs", "sheet", self.page, out, 0, 1, 0.5, "--phone")
+        with Image.open(out) as sheet:
+            self.assertEqual(sheet.size, (4 * 368, 360 + 26))
+
+    def test_motion_blur_averages_subframes_the_same_in_video_and_stills(self):
+        out = self.dir / "out/blur.mp4"
+        run("node", SCRIPTS / "render.mjs", "video", self.page, out, "--from", 0, "--to", 0.2, "--blur", 4)
+        v = probe(out)["video"]
+        self.assertEqual((v["width"], v["height"], int(v["nb_read_frames"])), (1440, 1440, 12))
+        frame = self.dir / "out/blur6.png"
+        run("ffmpeg", "-v", "error", "-y", "-i", out, "-vf", r"select=eq(n\,6)", "-frames:v", 1, frame)
+        run("node", SCRIPTS / "render.mjs", "stills", self.page, self.dir / "out/blurred", "0.1", "--blur", 4)
+        self.assertLess(mean_diff(frame, self.dir / "out/blurred/t0.100.png"), 2.0)
+
     def test_long_contact_sheet_comes_in_pages(self):
         out = self.dir / "out/long.png"
         printed = run("node", SCRIPTS / "render.mjs", "sheet", self.page, out, 0, 2.5, 0.1).stdout.split()

@@ -12,9 +12,15 @@ bpm = float(sys.argv[3]) if len(sys.argv) > 3 else 0
 files = sorted(glob.glob(folder + "/t*.png"), key=lambda f: float(f.rsplit("/t", 1)[1][:-4]))
 if not files:
     sys.exit(f"no t*.png frames in {folder}")
-cols, th, per_page = 6, 300, 24
 first = Image.open(files[0])
-tw = round(th * first.width / first.height)
+if len(sys.argv) > 4:
+    tw = int(sys.argv[4])
+    th = round(tw * first.height / first.width)
+    cols, rows = max(1, 1568 // (tw + 8)), max(1, 1568 // (th + 26))
+    per_page = cols * rows
+else:
+    cols, th, per_page = 6, 300, 24
+    tw = round(th * first.width / first.height)
 pages = [files[i:i + per_page] for i in range(0, len(files), per_page)]
 for n, chunk in enumerate(pages, 1):
     rows = (len(chunk) + cols - 1) // cols
