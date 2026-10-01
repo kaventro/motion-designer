@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "motion-designer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A motion designer for Claude Code: launch films of mobile and desktop apps (the real UI in an iPhone or a laptop window) as deterministic HTML films cut to music on the beat, in a chosen style, with an optional natural voiceover, checked frame by frame and rendered to MP4, a muted loop, a poster and one self-contained HTML.",
   "author": {
     "name": "kaventro",

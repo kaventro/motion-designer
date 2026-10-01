@@ -62,6 +62,17 @@ On the first run it looks for Node 22+, Chrome, ffmpeg, Python 3 and uv, tells y
 installs only what you agree to. Chrome comes as Chrome for Testing and needs no admin rights. The voice and
 music models are installed only when you want a voiceover or an original track.
 
+## Update
+
+New versions land on `main`; nothing updates by itself. Pick the line for how you installed it:
+
+```bash
+npx skills update motion-designer
+```
+
+As a Claude Code plugin, run `/plugin marketplace update motion-designer` in Claude Code, then restart it.
+From a clone, `git pull` in the clone; the linked skill folder follows it.
+
 ## Use it
 
 Open your app's repository, type `/motion-designer` and say what you need:
