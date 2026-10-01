@@ -1,6 +1,6 @@
 # Voiceover
 
-One JSON script drives everything: lines with start times, voices, the music bed and the mix. `voiceover.py` speaks every line, checks every take, fits each line into its slot, mixes it over the music and writes a track exactly as long as the film. Scripts are in `${CLAUDE_SKILL_DIR}/scripts`.
+One JSON script drives everything: lines with start times, voices, the music bed and the mix. `voiceover.py` speaks every line, checks every take, fits each line into its slot, mixes it over the music and writes a track exactly as long as the film. Scripts are in `$SKILL_DIR/scripts`.
 
 ## 0. Choose the engine
 
@@ -53,12 +53,12 @@ Voice settings (Kokoro): `kokoro` is the voice: `af_heart`, `af_bella`, `am_mich
 ## 3. Draft with `say`, then speak it for real
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/voiceover.py voiceover.json --backend say   # seconds, for timing
-python3 ${CLAUDE_SKILL_DIR}/scripts/voiceover.py voiceover.json                 # the final, with the script's backend
+python3 $SKILL_DIR/scripts/voiceover.py voiceover.json --backend say   # seconds, for timing
+python3 $SKILL_DIR/scripts/voiceover.py voiceover.json                 # the final, with the script's backend
 ```
 
-- Chatterbox needs a one-time setup: its own Python 3.11 environment with PyTorch, about 4 GB with the weights (8 GB once a voice uses the Turbo sample), downloaded once. Ask the user first, then `bash ${CLAUDE_SKILL_DIR}/scripts/install.sh chatterbox` (it needs uv; see [setup](setup.md)). An existing environment: `MOTION_DESIGNER_TTS_PYTHON=/path/bin/python`.
-- Kokoro needs a smaller one-time setup: its own Python environment with kokoro-onnx and the model files, about 0.6 GB. Ask first, then `bash ${CLAUDE_SKILL_DIR}/scripts/install.sh kokoro`. An existing one: `MOTION_DESIGNER_KOKORO_PYTHON=/path/bin/python`, and `MOTION_DESIGNER_KOKORO_MODELS=/dir` for `kokoro-v1.0.onnx` and `voices-v1.0.bin`.
+- Chatterbox needs a one-time setup: its own Python 3.11 environment with PyTorch, about 4 GB with the weights (8 GB once a voice uses the Turbo sample), downloaded once. Ask the user first, then `bash $SKILL_DIR/scripts/install.sh chatterbox` (it needs uv; see [setup](setup.md)). An existing environment: `MOTION_DESIGNER_TTS_PYTHON=/path/bin/python`.
+- Kokoro needs a smaller one-time setup: its own Python environment with kokoro-onnx and the model files, about 0.6 GB. Ask first, then `bash $SKILL_DIR/scripts/install.sh kokoro`. An existing one: `MOTION_DESIGNER_KOKORO_PYTHON=/path/bin/python`, and `MOTION_DESIGNER_KOKORO_MODELS=/dir` for `kokoro-v1.0.onnx` and `voices-v1.0.bin`.
 - Chatterbox speaks each line three times; the take whose intonation moves most like speech is kept (`out/voiceover/chatterbox/takes.json` says why). Kokoro speaks a line the same way every time, so it takes one. Takes are cached in `out/voiceover/<backend>/`; delete a line's `.wav` there to speak it again, or change its text.
 - Every take is checked: its length against a plain reading (0.7–1.7×), no gap over 0.7 s inside it, and it must end before its `until` or the next line. A failing line stops the run with the reason. Reword it or move it.
 

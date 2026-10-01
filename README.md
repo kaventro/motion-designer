@@ -1,6 +1,7 @@
 # motion-designer
 
-A Claude Code skill that makes launch films for apps. It rebuilds your app's real interface in HTML, puts it
+An agent skill for Claude Code and Codex that makes launch films for apps, and other short videos from code:
+titles, kinetic type, explainers, data videos, music videos and graphics over footage. It rebuilds your app's real interface in HTML, puts it
 in an iPhone or in a window on a laptop, times every move to the music, checks the film frame by frame and
 renders it to video.
 
@@ -46,8 +47,16 @@ the command is `/motion-designer:motion-designer`:
 /plugin install motion-designer@motion-designer
 ```
 
+For Codex, the same skill goes into its skills folder, where `$motion-designer` calls it:
+
+```bash
+npx skills add kaventro/motion-designer -g -a codex
+```
+
 From a clone you can link the skill folder instead:
-`ln -s "$PWD/skills/motion-designer" ~/.claude/skills/motion-designer`.
+`ln -s "$PWD/skills/motion-designer" ~/.claude/skills/motion-designer` (or `~/.codex/skills/motion-designer`).
+The skill names the few things that differ between agents (planning, helpers, looking at images) in
+[harness](skills/motion-designer/reference/harness.md).
 
 On the first run it looks for Node 22+, Chrome, ffmpeg, Python 3 and uv, tells you what is missing and why, and
 installs only what you agree to. Chrome comes as Chrome for Testing and needs no admin rights. The voice and

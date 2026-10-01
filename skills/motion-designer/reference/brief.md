@@ -2,9 +2,9 @@
 
 Every new film starts with a brief written for this product alone, agreed with the user before anything is built. It is the plan: what the film is for, what it may use, how it should feel, the story scene by scene, how it is built, and what happens first.
 
-## In plan mode
+## As a plan
 
-Unless the user has asked you to go straight to building, or handed you a complete brief of their own, switch to plan mode first (`EnterPlanMode`). There you only read: the code, the assets, the screenshots. Write the brief as the plan and present it with `ExitPlanMode`; build only after the user approves it. Save the approved brief as `brief.md` in the film folder, and keep to it. A change of direction is a change to the brief first.
+Unless the user has asked you to go straight to building, or handed you a complete brief of their own, plan first ([harness](harness.md), "Plan"). While planning you only read: the code, the assets, the screenshots. Write the brief as the plan and present it for approval; build only after the user approves it. Save the approved brief as `brief.md` in the film folder, and keep to it. A change of direction is a change to the brief first.
 
 ## The product's name
 

@@ -5,8 +5,8 @@ The motion-designer scripts need a few programs. Find out what this machine has,
 ## 1. Check
 
 ```bash
-bash ${CLAUDE_SKILL_DIR}/scripts/doctor.sh          # a table; exit 1 if something required is missing
-bash ${CLAUDE_SKILL_DIR}/scripts/doctor.sh --json   # the same, to read
+bash $SKILL_DIR/scripts/doctor.sh          # a table; exit 1 if something required is missing
+bash $SKILL_DIR/scripts/doctor.sh --json   # the same, to read
 ```
 
 | Tool | Need | For |
@@ -34,8 +34,8 @@ Never install without a yes. If they decline, say which steps won't work, and co
 ## 3. Install and re-check
 
 ```bash
-bash ${CLAUDE_SKILL_DIR}/scripts/install.sh <tool>          # node | chrome | ffmpeg | python3 | uv | pillow | chatterbox | kokoro | acestep | swift
-bash ${CLAUDE_SKILL_DIR}/scripts/doctor.sh
+bash $SKILL_DIR/scripts/install.sh <tool>          # node | chrome | ffmpeg | python3 | uv | pillow | chatterbox | kokoro | acestep | swift
+bash $SKILL_DIR/scripts/doctor.sh
 ```
 
 - macOS installs go through Homebrew; if Homebrew itself is missing, give the user the link (https://brew.sh). Its installer asks for their password, so they run it.

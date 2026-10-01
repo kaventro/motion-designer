@@ -1,6 +1,6 @@
 # Music and sound
 
-The film's clock is the music's: every action sits on a beat, the biggest reveal on the drop, and the edit is a whole number of bars so it starts on a downbeat and loops. Scripts are in `${CLAUDE_SKILL_DIR}/scripts`; they need `ffmpeg` and Python 3.
+The film's clock is the music's: every action sits on a beat, the biggest reveal on the drop, and the edit is a whole number of bars so it starts on a downbeat and loops. Scripts are in `$SKILL_DIR/scripts`; they need `ffmpeg` and Python 3.
 
 ## 0. The sound brief
 
@@ -36,22 +36,22 @@ An original instrumental made for this film with ACE-Step 1.5 (MIT, code and wei
 ```
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/music_gen.py music.json --plan-only     # plans every take and says how each will sound
-python3 ${CLAUDE_SKILL_DIR}/scripts/music_gen.py music.json rhodes          # renders the ones that fit: audio/source/ace-rhodes.wav
+python3 $SKILL_DIR/scripts/music_gen.py music.json --plan-only     # plans every take and says how each will sound
+python3 $SKILL_DIR/scripts/music_gen.py music.json rhodes          # renders the ones that fit: audio/source/ace-rhodes.wav
 ```
 
 - **Plan, hear, then render.** ACE-Step's language model plans a take in about 20 seconds and then describes its own plan: genre, drums, instruments, mood, tempo and key. That line is the first check against the sound brief. Plans drift from their captions (a nylon-guitar bed planned as dark EBM, a marimba bed as four-on-the-floor house): drop those and render only the takes that fit, since rendering is the slow part.
 - **Captions** read the way ACE-Step describes music, in full sentences: the feel and genre, the drums, three or four instruments, the space, what it is for, "No vocals." For a bed leave out "build-up", "drop", "riser" and "euphoric": they pull the plan toward club music. Name moods and instruments, never artists or songs.
 - `bpm` is the film's tempo; `seconds` is the film plus 16–32 bars, to cut from. `sections` (default intro, verse, chorus, verse, chorus, outro) sets the order of the parts.
 - `music_gen.py --hear <audio> ...` describes any track the same way: a rendered take, the user's track, a reference film's soundtrack (a voice in it comes back as "vocals").
-- Speed: the models run on this machine's GPU. On an M2 Pro with 16 GB, planning and hearing take about 20 seconds per take; rendering about 3 minutes to load, then 2–3 minutes per 64-second take, slower while renders or a voice run beside it. On a machine with an NVIDIA card (12 GB or more) a take takes seconds: start ACE-Step's API server there (`start_api_server.bat` on Windows, `start_api_server.sh` on Linux, with `HOST=0.0.0.0`, `API_KEY=--api-key <key>` and `LM_MODEL_PATH=--lm-model-path acestep-5Hz-lm-1.7B` set at its top, port 8001 open to the local network only), then here `MOTION_DESIGNER_ACESTEP_URL=http://<its address>:8001 MOTION_DESIGNER_ACESTEP_KEY=<key> python3 ${CLAUDE_SKILL_DIR}/scripts/music_gen.py music.json`. The server plans and renders in one go; hear its takes here with `--hear`.
+- Speed: the models run on this machine's GPU. On an M2 Pro with 16 GB, planning and hearing take about 20 seconds per take; rendering about 3 minutes to load, then 2–3 minutes per 64-second take, slower while renders or a voice run beside it. On a machine with an NVIDIA card (12 GB or more) a take takes seconds: start ACE-Step's API server there (`start_api_server.bat` on Windows, `start_api_server.sh` on Linux, with `HOST=0.0.0.0`, `API_KEY=--api-key <key>` and `LM_MODEL_PATH=--lm-model-path acestep-5Hz-lm-1.7B` set at its top, port 8001 open to the local network only), then here `MOTION_DESIGNER_ACESTEP_URL=http://<its address>:8001 MOTION_DESIGNER_ACESTEP_KEY=<key> python3 $SKILL_DIR/scripts/music_gen.py music.json`. The server plans and renders in one go; hear its takes here with `--hear`.
 - Plans and takes already made are kept; delete one to make it again (a changed caption or seed plans again).
 - `audio/SOURCE.md` records "original, made with ACE-Step 1.5 (acestep-v15-turbo, acestep-5Hz-lm-1.7B)", every take with its caption, its seed and what ACE-Step heard in it, which one was used, the date and the bars used.
 
 ## 2. Listen
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/beats.py audio/source/track.mp3 --json audio/grid.json
+python3 $SKILL_DIR/scripts/beats.py audio/source/track.mp3 --json audio/grid.json
 ```
 
 ```
@@ -85,7 +85,7 @@ The film is `BEATS` long; `BEATS = bars × beats_per_bar`.
 ## 4. Cut
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/music_edit.py audio/source/track.mp3 audio/grid.json --from-bar 4 --bars 25 --out audio/edit
+python3 $SKILL_DIR/scripts/music_edit.py audio/source/track.mp3 audio/grid.json --from-bar 4 --bars 25 --out audio/edit
 ```
 
 ```
@@ -117,8 +117,8 @@ In a story, feature cards or a type-led film, what moves on screen makes a small
 | `hop` | the character jumping |
 
 ```bash
-node ${CLAUDE_SKILL_DIR}/scripts/render.mjs cues src/index.html audio/cues.json
-python3 ${CLAUDE_SKILL_DIR}/scripts/sfx.py audio/cues.json --key "G major" --music audio/edit.wav --out audio/mix
+node $SKILL_DIR/scripts/render.mjs cues src/index.html audio/cues.json
+python3 $SKILL_DIR/scripts/sfx.py audio/cues.json --key "G major" --music audio/edit.wav --out audio/mix
 ```
 
 `sfx.py` synthesizes every sound here (original, nothing downloaded), tunes the pitched ones to the music's key (the key `--hear` gives, or the take's), writes `audio/mix-sfx.wav` and mixes it over the music: the bed at `--music-gain` (0.32) with a dip at 3.5 kHz to make room, the whole at −16 LUFS, `audio/mix.wav` and `.m4a`, exactly the film's length. Render with `--audio audio/mix.m4a`; a voiceover goes on top with `"music": "audio/mix.wav"`. A sound that runs past the end continues at the start, as the film loops.
@@ -127,7 +127,7 @@ Keep them few and small: one sound per action that matters, starting on the fram
 
 ## 6. Verify
 
-- `python3 ${CLAUDE_SKILL_DIR}/scripts/beats.py audio/edit.wav` reports the same tempo and bar 1 at ≈ 0.00 s (or one bar length, the same point).
+- `python3 $SKILL_DIR/scripts/beats.py audio/edit.wav` reports the same tempo and bar 1 at ≈ 0.00 s (or one bar length, the same point).
 - `FILM_INFO.frames` in the film (open it with `?render` and read `window.FILM_INFO`, or `check.mjs`) equals the printed frame count.
 - The beat map in the README lists the drop at the printed film beat and time.
 

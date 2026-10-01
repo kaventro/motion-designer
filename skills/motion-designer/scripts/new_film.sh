@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
-dir="${1:?usage: new_film.sh <dir> [mobile|desktop|story]}"
+dir="${1:?usage: new_film.sh <dir> [mobile|desktop|story|blank|overlay]}"
 kind="${2:-mobile}"
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 case "$kind" in
-  mobile | desktop | story) ;;
-  *) echo "kind must be mobile, desktop or story, not $kind" >&2; exit 2 ;;
+  mobile | desktop | story | blank | overlay) ;;
+  *) echo "kind must be mobile, desktop, story, blank or overlay, not $kind" >&2; exit 2 ;;
 esac
 if [ -d "$dir/src" ] && [ -n "$(ls -A "$dir/src")" ]; then
   echo "$dir/src is not empty; not overwriting it" >&2

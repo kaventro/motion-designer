@@ -5,7 +5,7 @@ A film is done when the checks pass and a full review pass finds nothing to fix.
 ## Automatic checks
 
 ```bash
-node ${CLAUDE_SKILL_DIR}/scripts/check.mjs film/src/index.html [--dist film/dist/name.html] [--no-loop] [--step 0.05]
+node $SKILL_DIR/scripts/check.mjs film/src/index.html [--dist film/dist/name.html] [--no-loop] [--step 0.05]
 ```
 
 | Check | Fails when | Usual cause |
@@ -21,18 +21,24 @@ To find a frame that breaks determinism, compare stills of the same time taken a
 ## Review routine
 
 ```bash
-node ${CLAUDE_SKILL_DIR}/scripts/render.mjs sheet film/src/index.html out/qa/all.png 0 46.5 0.5       # overview
-node ${CLAUDE_SKILL_DIR}/scripts/render.mjs sheet film/src/index.html out/qa/t12.png 11.8 13.4 0.05  # one transition
-node ${CLAUDE_SKILL_DIR}/scripts/render.mjs stills film/src/index.html out/qa/stills 8.2,15.0 --scale 2  # readability
+node $SKILL_DIR/scripts/render.mjs sheet film/src/index.html out/qa/all.png 0 46.5 0.5       # overview
+node $SKILL_DIR/scripts/render.mjs sheet film/src/index.html out/qa/t12.png 11.8 13.4 0.05  # one transition
+node $SKILL_DIR/scripts/render.mjs stills film/src/index.html out/qa/stills 8.2,15.0 --scale 2  # readability
 ```
 
-Sheets label each tile with its time and beat. Read them with the Read tool.
+Sheets label each tile with its time and beat, 24 tiles a page (`all-1.png`, `all-2.png`, ... when there are more).
+
+Pictures are the most expensive thing in a session and they stay in it until it ends, so the looking is done by
+[reviewers](reviewer.md) with clean contexts, who send back lines of text ([harness](harness.md), "Delegate"). Split
+the film into stretches of about 12 s and dispatch one reviewer per stretch and kind, all at once: `overview` for
+the whole film, `transitions` with the cut times, `text` with the times of every text screen. Give each the beat
+map rows for its stretch. Where your harness cannot delegate, do the same passes yourself, one stretch at a time.
 
 1. **Overview** every 0.5 s: does the story read? Is the phone always there once it forms? Is every result held long enough to read? Give each line that has to be read half a second, plus a third of a second for every word, once its last word has landed and stopped moving.
 2. **Every transition** at 0.05 s, from 0.3 s before to 0.3 s after: flashes, pops, overlaps, mask edges.
 3. **Every screen with text** at full size (`--scale 2`, view at 100 %): truncation, clipped descenders, text size, alignment against the app.
-4. Fix, then re-run the checks and re-look at what you changed and its neighbours. Repeat until a pass finds nothing.
-5. **Fresh eyes** on the finished render: play it once to someone new to the app, or imagine you are: can they name the app, the job it does, the person it does it for, and where to find it? Is frame 0 (the thumbnail most players and feeds show) a finished frame you'd post? If not, fix the story or the opening, not the polish.
+4. Fix what the reports name, re-run the checks, then send a reviewer back to only what changed and its neighbours, with `CHANGED` saying what was fixed. Repeat until every report reads `clean`.
+5. **Fresh eyes** on the finished render: play it once to someone new to the app, or imagine you are: can they name the app, the job it does, the person it does it for, and where to find it? Is frame 0 (the thumbnail most players and feeds show) a finished frame you'd post? If not, fix the story or the opening, not the polish. Look at frame 0 and the poster yourself.
 
 ## Failure catalogue
 
@@ -61,11 +67,7 @@ Sheets label each tile with its time and beat. Read them with the Read tool.
 ## Render verification
 
 ```bash
-ffprobe -v error -select_streams v:0 -count_frames -show_entries stream=nb_read_frames,width,height,r_frame_rate -of csv=p=0 out/name.mp4
-ffprobe -v error -show_entries format=duration -of csv=p=0 out/name.mp4
+node $SKILL_DIR/scripts/render.mjs verify film/src/index.html out/name.mp4 [--under footage.mp4]
 ```
 
-- Frame count equals `FILM_INFO.frames`, size equals `W × H`, duration equals `frames / FPS` (audio included).
-- Extract the first and the last frame (`ffmpeg -i out/name.mp4 -vf "select=eq(n\,0)" -frames:v 1 first.png`, and `n\,frames-1`) and compare: nearly identical for a still ending (compression differs slightly), one frame of ambient motion apart otherwise.
-- Extract a frame from the middle and compare with `render.mjs stills ... --scale 2` at the same time: the same picture.
-- Watch it once with sound: every cut and tap on the beat, the drop on the reveal.
+It checks the frame count against `FILM_INFO.frames`, the size against `W × H`, the duration against `frames / FPS`, and a frame from the middle against a still of the same time, and it reports whether there is audio and how far apart the first and last frames are: nearly identical for a still ending, one frame of ambient motion apart otherwise. Then watch it once with sound: every cut and tap on the beat, the drop on the reveal.

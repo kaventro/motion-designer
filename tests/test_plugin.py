@@ -158,7 +158,7 @@ class Skills(unittest.TestCase):
     def test_scripts_the_skills_call_exist(self):
         named = set()
         for md in ROOT.glob("skills/**/*.md"):
-            named |= set(re.findall(r"\$\{CLAUDE_SKILL_DIR\}/scripts/([\w.]+)", md.read_text()))
+            named |= set(re.findall(r"SKILL_DIR/scripts/([\w.]+)", md.read_text()))
         self.assertGreaterEqual(len(named), 10)
         for name in named:
             self.assertTrue((SCRIPTS / name).is_file(), name)
@@ -208,6 +208,16 @@ class Film(unittest.TestCase):
         run("node", SCRIPTS / "render.mjs", "stills", self.page, self.dir / "out/stills", "0.5")
         self.assertLess(mean_diff(frame, self.dir / "out/stills/t0.500.png"), 2.0)
 
+    def test_verify_compares_a_render_with_the_film(self):
+        out = self.dir / "out/part.mp4"
+        run("node", SCRIPTS / "render.mjs", "video", self.page, out, "--audio", self.dir / "audio/edit.m4a", "--to", 1)
+        p = run("node", SCRIPTS / "render.mjs", "verify", self.page, out, ok=False)
+        self.assertEqual(p.returncode, 1, p.stdout + p.stderr)
+        self.assertRegex(p.stdout, r"FAIL  frames 60 \(film \d+\)")
+        self.assertIn("PASS  size 1440x1440", p.stdout)
+        self.assertRegex(p.stdout, r"PASS  frame 30 matches a still of 0\.500s")
+        self.assertIn("info  with audio", p.stdout)
+
     def test_supersampled_video_keeps_the_film_size(self):
         out = self.dir / "out/scaled.mp4"
         run("node", SCRIPTS / "render.mjs", "video", self.page, out, "--scale", 2, "--from", 0.5, "--to", 0.7)
@@ -242,6 +252,13 @@ wait $chrome
         self.assertEqual(len(list((self.dir / "out/sheet").glob("t*.png"))), 3)
         with Image.open(out) as sheet:
             self.assertEqual(sheet.size, (6 * 308, 326))
+
+    def test_long_contact_sheet_comes_in_pages(self):
+        out = self.dir / "out/long.png"
+        printed = run("node", SCRIPTS / "render.mjs", "sheet", self.page, out, 0, 2.5, 0.1).stdout.split()
+        self.assertEqual([p.rsplit("/", 1)[1] for p in printed], ["long-1.png", "long-2.png"])
+        with Image.open(self.dir / "out/long-1.png") as page:
+            self.assertEqual(page.size, (6 * 308, 4 * 326))
 
     def test_single_file_is_self_contained_and_identical(self):
         dist = self.dir / "dist/film.html"
@@ -290,6 +307,34 @@ class DesktopFilm(unittest.TestCase):
         self.assertTrue(laptop[3], "the desktop shows on the pull-back")
         self.assertIn("rotateX", closing[4], "the lid turns while it closes")
         self.assertEqual(laptop[4], "none", "the open lid has no transform, so it stays crisp")
+
+
+@unittest.skipUnless(HAVE_BROWSER, "needs Node 22+, Chrome and ffmpeg")
+class AnyVideo(unittest.TestCase):
+
+    def test_blank_template_with_every_join_and_effect_passes_every_check(self):
+        p = check(new_film("blank", "blank") / "src/index.html")
+        self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
+        self.assertEqual(p.stdout.count("PASS"), 4, p.stdout)
+
+    def test_overlay_is_drawn_over_the_footage(self):
+        folder = new_film("overlay", "overlay")
+        page = folder / "src/index.html"
+        self.assertEqual(check(page).returncode, 0)
+        footage = folder / "footage.mp4"
+        run("ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "color=c=0x2060c0:s=640x360:r=30:d=3", "-f", "lavfi",
+            "-i", "sine=f=330:d=3", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", footage)
+        out = folder / "out/over.mp4"
+        run("node", SCRIPTS / "render.mjs", "video", page, out, "--under", footage, "--from", 2, "--to", 2.5)
+        s = probe(out)
+        self.assertEqual((s["video"]["width"], s["video"]["height"], int(s["video"]["nb_read_frames"])), (1920, 1080, 30))
+        self.assertIn("audio", s)
+        run("node", SCRIPTS / "render.mjs", "stills", page, folder / "out/st", "2.2", "--under", footage)
+        if Image is None:
+            self.skipTest("the colour check needs Pillow")
+        with Image.open(folder / "out/st/t2.200.png") as im:
+            r, g, b = im.convert("RGB").getpixel((1800, 60))
+            self.assertLess(abs(r - 32) + abs(g - 96) + abs(b - 192), 24, (r, g, b))
 
 
 @unittest.skipUnless(HAVE_BROWSER, "needs Node 22+, Chrome and ffmpeg")

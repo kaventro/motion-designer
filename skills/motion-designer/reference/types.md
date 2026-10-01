@@ -45,3 +45,29 @@ Lines of type do the telling: one oversized line fills the frame, a word per bea
 ## Sting
 
 One idea in 3–8 seconds: the wordmark builds from the icon, or a shape from the app becomes the logo, then the tagline. Cut to a whole number of bars so it loops.
+
+## Beyond app films
+
+The same engine makes any short video. Start these from `templates/blank` (a dark canvas with full-frame shots, any
+size) or `templates/overlay` (a clear background drawn over footage), and reach for [effects](effects.md).
+
+| Type | Best for | Length · format | Built from |
+|---|---|---|---|
+| Title or sting | an intro, outro, logo or channel open | 3–10 s · any | `blank`: one or two shots, `split` + `rise`, one signature effect |
+| Kinetic type | a quote, a manifesto, an announcement | 10–40 s · vertical or square | `blank`: a line per beat, words with `stagger`, joins on bar lines |
+| Explainer | a topic or an idea, often with a voiceover | 30–90 s · landscape or vertical | `blank`: one shot per point, diagrams with `drawPath`, numbers with `countUp`, [voiceover](voiceover.md) |
+| Data video | a stat, a result, a chart | 8–30 s · any | `blank`: `countUp`, bars on `stagger`, lines with `drawPath` |
+| Music video or lyric cut | a track the visuals follow | the track's length · any | `blank`: cuts and hits on the grid from [music](music.md), `shake`, `glitch`, `sweep` on the drops |
+| Photo montage | photos telling a story | 15–60 s · any | `blank`: one photo per shot with `kenBurns`, `dissolve` or `push` joins |
+| Overlay on footage | lower thirds, captions, callouts, end cards on a recording | the footage's length · the footage's format | `overlay`, rendered with `--under footage.mp4` |
+
+How these differ from an app film:
+
+- **The brief** still comes first ([brief](brief.md)): what the video says, to whom, in which order. Swap "the
+  product's flows" for the points or lines it makes.
+- **Shots.** Each shot is a full-frame layer; `sequence()` shows them in turn and plays the join. One idea per shot,
+  each held long enough to read (the timing rule in [qa](qa.md)).
+- **Footage.** The picture under an overlay is the user's file; the film only draws what goes on top. Preview with
+  `render.mjs stills ... --under footage.mp4`, render with `render.mjs video ... --under footage.mp4 [--under-from s]`,
+  and verify with the same `--under`. The footage's own sound is kept unless `--audio` replaces it.
+- **Facts.** Numbers, quotes and names are the user's or invented for a demo, and the brief says which.
