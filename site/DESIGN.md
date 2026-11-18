@@ -46,7 +46,7 @@ React kits (Aceternity, Astryx, ObsidianUI, affectUI, BoardUI) do not apply.
 - No purple/blue **gradient** heroes, gradient text, glow blobs, or extra glass. The hero is solid `--field`. Existing `backdrop-filter` is only the frosted nav, `.btn-glass`, film tags, player backdrop, and cursor label — do not spread it.
 - One accent role per token (table above). Do not reassign `--mint` to buttons or `--violet` to body text.
 - No filler copy. Say what the skill does, as `index.html` already does.
-- Body contrast ≥ 4.5:1 (WCAG 2.2 AA). Prefer `--ink` / `--ink2` on `--bg`/`--card`; treat `--ink3` as labels only.
+- Body contrast ≥ 4.5:1 (WCAG 2.2 AA), including 12px labels. Prefer `--ink` / `--ink2` on `--bg`/`--card`. Existing `.label` uses `--ink3` (~4:1 on `--bg` at 12px); new copy at that size should use `--ink2` or better.
 - Spacing: 4/8 px multiples. Two or three radius roles (pill, card, inner).
 - Pages readable without JS (content is in HTML). JS is for the pebble, custom cursor, magnets, dialog player, copy, star count. Videos: keep `poster` plus an accessible name; size with `aspect-ratio` (or width/height).
 - Do not add a light theme unless asked. Do not restyle this page like a film (`skills/motion-designer/reference/styles.md` is for films).
@@ -63,7 +63,7 @@ Purposeful, short, on transform/opacity (and the existing clip-path / stroke-das
 | Media hover | 0.8 s scale | `.film video` |
 | Scroll reveal | view-timeline `appear` | gated by `@supports (animation-timeline: view())` |
 
-- **Always** honour `prefers-reduced-motion`. CSS already snaps animation/transition to ~0 (`site.css`). JS already sets `reduce` from `matchMedia` and skips the custom cursor, magnetic buttons, loop autoplay (hover-to-play instead), pebble hop/drop bounce, and idle sway. New motion must take the same `reduce` path.
+- **Always** honour `prefers-reduced-motion`. CSS already snaps animation/transition to ~0 (`site.css`). JS already sets `reduce` from `matchMedia` and skips the custom cursor, magnetic buttons, loop autoplay (hover-to-play instead), and the pebble’s hop, drop, and idle sway. Gaze and blink still run. New motion must take the same `reduce` path.
 - Custom cursor and magnets: fine pointer and not-reduced only (`hover: hover` and `pointer: fine`).
 - Pebble idle is tied to 128 BPM (`BEAT` in `site.js`) — keep it on the beat; do not add a second clock.
 - Do not add GSAP, Framer Motion, Lenis, scroll-jacking, looping decorative CSS, or random particles.
@@ -74,6 +74,6 @@ Purposeful, short, on transform/opacity (and the existing clip-path / stroke-das
 - [ ] Dark, wide and 375 px wide (there is no light theme).
 - [ ] No new anti-slop hits (grep: `linear-gradient(` on text/hero, extra `backdrop-filter`, emoji as icons). Film scrims and the pebble SVG gradients already in the page are allowed.
 - [ ] Keyboard: `:focus-visible` on `.btn` / `.copy`; Tab order nav → hero CTAs → films → install. Do not `outline: none` without a replacement.
-- [ ] `prefers-reduced-motion: reduce`: no cursor-hide, no magnets, no looping autoplay, pebble still, hero already drawn.
+- [ ] `prefers-reduced-motion: reduce`: no cursor-hide, no magnets, no looping autoplay, no pebble hop/drop/sway (gaze and blink still run), hero already drawn.
 - [ ] Lighthouse accessibility ≥ 95 for the public page.
 - [ ] Copied snippet: source URL + licence in a comment.
